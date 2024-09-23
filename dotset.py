@@ -29,18 +29,17 @@ def dotset(av_cross_image):
     # Find maens of stack.
     datas = np.array([A, B, C, D])
 
-# คำนวณค่าเฉลี่ยตามตำแหน่งของแถว (axis=0)
     uh = np.round(np.mean(datas, axis=0))
     # Find varience.
     mu = np.var(datas, axis=0, ddof=0)
     # Create value of cross mark.
-    u1 = av_cross_image[1:N-2:2, 2:M-1:2]  # ตรงกับ av_cross_image(2:2:N-2, 2:2:M-2)
-    u2 = av_cross_image[2:N-1:2, 1:M-2:2]  # ตรงกับ av_cross_image(3:2:N-1, 3:2:M-1)
+    u1 = av_cross_image[1:N-2:2, 2:M-1:2]  
+    u2 = av_cross_image[2:N-1:2, 1:M-2:2] 
     u1 = u1.flatten(order='F').reshape(-1, 1)
     u2 = u2.flatten(order='F').reshape(-1, 1)
 
     u = np.vstack((u1, u2))
-    print(u)
+    # print(u)
     d = u - uh
 
     [c1, r1] = np.meshgrid(np.arange(2, N-1, 2), np.arange(2, M-1, 2))
@@ -54,9 +53,7 @@ def dotset(av_cross_image):
     # print(c2)
     c = np.vstack((c1, c2))
     r = np.vstack((r1, r2))
-    
-
-    # Compile u1 และ u2 เข้าด้วยกัน
+    # Compile u1 and u2 
     u = np.vstack((u1, u2))
     # print("This is c")
     # print(c)
@@ -68,17 +65,12 @@ def dotset(av_cross_image):
     # print(uh)
     # print("This is u")
     # print(u)
-    # รวม c, r, d, mu, uh, u เป็นเมทริกซ์เดียว
     data = np.hstack((c, r, d, mu, uh, u, u))
-    print("Data not sort : ", data)
+    # print("Data not sort : ", data)
     # print(data)
   
-    sort = np.argsort(data[:, 3])  # คำนวณดัชนีที่ถูกจัดเรียง
-    data = data[sort, :]  # จัดเรียงข้อมูลใหม่
+    sort = np.argsort(data[:, 3])  
+    data = data[sort, :]  # จั
     # print(data[:,[3]])
-    print(data[:, [3]])
-    # c, r, u,
-
-# แสดงค่าที่มากที่สุด
     # print("ค่าที่มากที่สุดในเมทริกซ์ c:", max_value)
     return data

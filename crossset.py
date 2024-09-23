@@ -3,8 +3,6 @@ import numpy as np
 def crossset(originalImage):
     # Find size of image.
     N, M = originalImage.shape
-
-
     # Cross mark.
     # print(type(N))
     A1 = originalImage[0:N-3:2, 1:M-2:2]
@@ -32,9 +30,8 @@ def crossset(originalImage):
     # Find maens of stack.
     datas = np.array([A, B, C, D])
 
-# คำนวณค่าเฉลี่ยตามตำแหน่งของแถว (axis=0)
     uh = np.round(np.mean(datas, axis=0))
-    print("uh : ", uh)
+    # print("uh : ", uh)
     # print(type(uh))
     
     # Find varience.
@@ -42,13 +39,13 @@ def crossset(originalImage):
     # mu = np.var([np.abs(A - C), np.abs(A - D), np.abs(B - D), np.abs(B - C)], axis=0)
     # Create value of cross mark.
     
-    u1 = originalImage[1:N-2:2, 1:M-2:2]  # ตรงกับ originalImage(2:2:N-2, 2:2:M-2)
-    u2 = originalImage[2:N-1:2, 2:M-1:2]  # ตรงกับ originalImage(3:2:N-1, 3:2:M-1)
+    u1 = originalImage[1:N-2:2, 1:M-2:2]  
+    u2 = originalImage[2:N-1:2, 2:M-1:2]  
     u1 = u1.flatten(order='F').reshape(-1, 1)
     u2 = u2.flatten(order='F').reshape(-1, 1)
 
     u = np.vstack((u1, u2))
-    print(u)
+    # print(u)
     d = u - uh
 
     [c1, r1] = np.meshgrid(np.arange(2, N-1, 2), np.arange(2, M-1, 2))
@@ -63,7 +60,6 @@ def crossset(originalImage):
     c = np.vstack((c1, c2))
     r = np.vstack((r1, r2))
     
-
     # Compile u1 และ u2 เข้าด้วยกัน
     u = np.vstack((u1, u2))
     # print("This is c")
@@ -76,17 +72,17 @@ def crossset(originalImage):
     # print(uh)
     # print("This is u")
     # print(u)
-    # รวม c, r, d, mu, uh, u เป็นเมทริกซ์เดียว
+    # Complie c, r, d, mu, uh, u to a matrix.
     data = np.hstack((c, r, d, mu, uh, u, u))
-    print("Data not sort : ", data)
+    print("Data not sort : ")
+    print(data[:, [0,1,2,3,4,5]])
     # print(data)
   
-    sort = np.argsort(data[:, 3])  # คำนวณดัชนีที่ถูกจัดเรียง
-    data = data[sort, :]  # จัดเรียงข้อมูลใหม่
+    sort = np.argsort(data[:, 3])  
+    data = data[sort, :]  
     # print(data[:,[3]])
+    print("Already sort: c  r  d  mu  uh  u")
     print(data[:, [0,1,2,3,4,5]])
-    # c, r, u,
 
-# แสดงค่าที่มากที่สุด
     # print("ค่าที่มากที่สุดในเมทริกซ์ c:", max_value)
     return data
