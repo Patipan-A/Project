@@ -39,7 +39,7 @@ def dotset(av_cross_image):
     u2 = u2.flatten(order='F').reshape(-1, 1)
 
     u = np.vstack((u1, u2))
-    print(u)
+    # print(u)
     d = u - uh
 
     [c1, r1] = np.meshgrid(np.arange(2, N-1, 2), np.arange(2, M-1, 2))
@@ -69,7 +69,11 @@ def dotset(av_cross_image):
     # print(u)
     # Complie c, r, d, mu, uh, u to a matrix.
     data = np.hstack((c, r, d, mu, uh, u, u))
-    print("Data not sort : ", data)
+    data = np.round(data, 4)
+    print(">> Dotset")
+    print(">>  c        r        d        mu     uh        u        u")
+    print(data[0:6])
+    # print("Data not sort : ", data)
     # print(data)
   
     sort = np.argsort(data[:, 3])  

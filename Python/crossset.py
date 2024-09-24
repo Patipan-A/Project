@@ -74,15 +74,18 @@ def crossset(originalImage):
     # print(u)
     # Complie c, r, d, mu, uh, u to a matrix.
     data = np.hstack((c, r, d, mu, uh, u, u))
+    np.set_printoptions(precision=4, suppress=True)
+
     data = np.round(data, 4)
+    print(">> Crosset")
+    print(">>  c        r        d        mu     uh        u        u")
+    print(data[0:6])
     # print("Data not sort : ")
     # print(data)
   
     sort = np.argsort(data[:, 3])  
     data = data[sort, :]  
     # print(data[:,[3]])
-    print("Already sort: c  r  d  mu  uh  u")
-    print(data[:, [0,1,2,3,4,5]])
 
     # print("ค่าที่มากที่สุดในเมทริกซ์ c:", max_value)
     return data
