@@ -74,8 +74,8 @@ def crossset(originalImage):
     # print(u)
     # Complie c, r, d, mu, uh, u to a matrix.
     data = np.hstack((c, r, d, mu, uh, u, u))
-    print("Data not sort : ")
-    print(data)
+    data = np.round(data, 4)
+    # print("Data not sort : ")
     # print(data)
   
     sort = np.argsort(data[:, 3])  
