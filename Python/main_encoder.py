@@ -61,3 +61,6 @@ B = np.clip(B, 0, 255)
 np.savetxt('image_array.txt', G.reshape(-1, G.shape[-1]), fmt='%d')
 img_reconstructed = np.stack([B, G, R], axis=-1).astype(np.uint8)
 cv2.imwrite('reconstructed_image.png', img_reconstructed)
+img = np.random.randint(0, 256, (512, 512, 3), dtype=np.uint8)
+
+np.savetxt('image_array.txt', B.reshape(-1, B.shape[-1]), fmt='%d')
