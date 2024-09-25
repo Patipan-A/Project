@@ -1,17 +1,21 @@
 import numpy as np
+import cv2 
 from PIL import Image
 import matplotlib.pyplot as plt
 from crossset import crossset
 from dotset import dotset
 from embeded_modification2 import embeded
+np.set_printoptions(threshold=np.inf)
 # Import an image.
 original_image = Image.open('lenanew.tiff')
-original_image = np.double(original_image)
 image_array = np.array(original_image)
 # Divide RGB plane.
-R = image_array[:, :, 0]  
+R = image_array[:, :, 0]
 G = image_array[:, :, 1]  
 B = image_array[:, :, 2]  
+R = R.astype(float)
+G = G.astype(float)
+B = B.astype(float)
 currentImage = R
 cross_data = crossset(currentImage)
 # Convert image to grayscale.
@@ -43,7 +47,6 @@ Tp = np.repeat(np.arange(1, maxT), 2).reshape(-1, 1)
 TpTnpsnr = np.zeros((len(Tn), 3))
 TpTnpsnr[:, 0] = np.concatenate((np.array([0]), Tp.flatten(), np.array([maxT])))
 TpTnpsnr[:, 1] = Tn.flatten()
-
 # Opimize value. 
 oypsnr = np.max(TpTnpsnr[:, 2])
 Id = np.argmax(TpTnpsnr[:, 2])  
@@ -51,21 +54,10 @@ embeded_cross_image, PLcheckcross = embeded(cross_data, Pload_cross, TpTnpsnr[Id
 dot_data = dotset(embeded_cross_image)
 embeded_dot_image, PLcheckdot = embeded(dot_data, Pload_dot, TpTnpsnr[Id, 0], TpTnpsnr[Id, 1], embeded_cross_image)
 R = embeded_dot_image
-
-embeded = np.stack((R, G, B), axis=-1)
-embeded = (embeded * 255).astype(np.uint8)
-image = Image.fromarray(embeded)
-image.save('corrected_rgb_image.png')
-image.show()
-
-# emb = np.concatenate((R[:, :, np.newaxis], G[:, :, np.newaxis], B[:, :, np.newaxis]), axis=-1)
-# emb = (emb * 255).astype(np.uint8)
-# print(emb)
-
-# image = Image.fromarray(emb)
-# image.save('output_image.png')
-
-# image.show()
-# image = Image.fromarray(combined_image)
-# image.save('encoder.tiff')
-# image.show()
+# Complie RGB plane.
+R = np.clip(R, 0, 255)
+G = np.clip(G, 0, 255)
+B = np.clip(B, 0, 255)
+np.savetxt('image_array.txt', G.reshape(-1, G.shape[-1]), fmt='%d')
+img_reconstructed = np.stack([B, G, R], axis=-1).astype(np.uint8)
+cv2.imwrite('reconstructed_image.png', img_reconstructed)
