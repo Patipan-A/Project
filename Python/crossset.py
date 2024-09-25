@@ -39,8 +39,8 @@ def crossset(originalImage):
     # mu = np.var([np.abs(A - C), np.abs(A - D), np.abs(B - D), np.abs(B - C)], axis=0)
     # Create value of cross mark.
     
-    u1 = originalImage[1:N-2:2, 1:M-2:2]  # ตรงกับ originalImage(2:2:N-2, 2:2:M-2)
-    u2 = originalImage[2:N-1:2, 2:M-1:2]  # ตรงกับ originalImage(3:2:N-1, 3:2:M-1)
+    u1 = originalImage[1:N-2:2, 1:M-2:2]  
+    u2 = originalImage[2:N-1:2, 2:M-1:2]  
     u1 = u1.flatten(order='F').reshape(-1, 1)
     u2 = u2.flatten(order='F').reshape(-1, 1)
 
