@@ -23,6 +23,7 @@ watermark = Image.open('w.bmp').convert("L")
 threshold = 0.8 * 255  
 watermark = watermark.point(lambda p: 1.0 if p > threshold else 0.0)
 watermark = np.array(watermark)
+# print(len(watermark))
 # Convert datatype to double.
 watermark = watermark.astype(np.float64)  
 # A column matrix.

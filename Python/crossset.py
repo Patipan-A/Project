@@ -51,16 +51,17 @@ def crossset(originalImage):
     c = np.vstack((c1, c2))
     r = np.vstack((r1, r2))
     u = np.vstack((u1, u2))
+    print(len(c))
 
     data = np.hstack((c, r, d, mu, uh, u, u))
     np.set_printoptions(precision=4, suppress=True)
 
     data = np.round(data, 4)
+    data = data[np.argsort(data[:, 3])]
     # print("Shape N : ", N,"Shape M : ", M)
     # print(">> Crosset")
     # print(">>  c        r        d        mu     uh        u        u")
     # print(data[:,0:6])
 
-    sort = np.argsort(data[:, 3])  
-    data = data[sort, :]  
+    
     return data
